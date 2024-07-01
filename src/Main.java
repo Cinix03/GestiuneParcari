@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 
 
 public class Main extends Application {
@@ -16,6 +17,7 @@ public class Main extends Application {
         vBox.getChildren().add(button);
         //scene.getChildren().add(button);
         Scene scene = new Scene(vBox, 400, 300);
+        Parcare p = new Parcare("aici", "prima", 40, 30, 0, 30);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
