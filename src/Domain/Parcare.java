@@ -1,3 +1,4 @@
+package Domain;
 
 public class Parcare {
     private String adresa;
@@ -8,9 +9,9 @@ public class Parcare {
     private int locuri_libere;
 
     /*
-    Constructor pentru Parcare;
+    Constructor pentru Domain.Parcare;
      */
-    Parcare(String adresa, String nume, double capacitate, int locuri_totale, int locuri_ocupate, int locuri_libere) {
+    public Parcare(String adresa, String nume, double capacitate, int locuri_totale, int locuri_ocupate, int locuri_libere) {
         this.adresa = adresa;
         this.nume = nume;
         this.dimensiune = capacitate;
