@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RepoParcare {
     private String nume_fisier;
-    private ArrayList<Parcare> parcari;
+    private ArrayList<Parcare> parcari = new ArrayList<Parcare>();
 
     public RepoParcare(String nume_fisier) throws IOException {
         this.nume_fisier = nume_fisier;
