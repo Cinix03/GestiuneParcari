@@ -13,8 +13,9 @@ public class RepoParcare {
     private String nume_fisier;
     private ArrayList<Parcare> parcari;
 
-    public RepoParcare(String nume_fisier){
+    public RepoParcare(String nume_fisier) throws IOException {
         this.nume_fisier = nume_fisier;
+        load_from_file();
     };
 
     private void load_from_file() throws IOException {
@@ -35,7 +36,7 @@ public class RepoParcare {
 
     }
 
-    ArrayList<Parcare> getParcari() {
+    public ArrayList<Parcare> getParcari() {
         return parcari;
     }
 }
