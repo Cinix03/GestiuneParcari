@@ -20,9 +20,14 @@ public class Parcare {
         this.locuri_libere = locuri_libere;
     };
 
+    @Override
+    public String toString() {
+        return adresa+","+nume+","+dimensiune+","+locuri_totale+","+locuri_ocupate+","+locuri_libere;
+    }
+
     /*
-    getter pentru adresa
-     */
+        getter pentru adresa
+         */
     public String getAdresa() {
         return adresa;
     }

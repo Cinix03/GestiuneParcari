@@ -2,6 +2,8 @@ package Repositories;
 
 import Domain.Parcare;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +20,16 @@ public class RepoParcare {
         load_from_file();
     };
 
+    public void adaugaParcare(Parcare parcare) {
+        parcari.add(parcare);
+        load_to_file();
+    }
+
+    public void stergeParcare(Parcare parcare) {
+        parcari.remove(parcare);
+        load_to_file();
+    }
+
     private void load_from_file() throws IOException {
         try{
             List<String> lines = Files.readAllLines(Paths.get(nume_fisier));
@@ -33,7 +45,14 @@ public class RepoParcare {
     }
 
     private void load_to_file(){
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nume_fisier))) {
+            for (Parcare p : parcari) {
+                writer.write(p.toString());
+            }
+            writer.newLine(); // Adds a new line
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Parcare> getParcari() {
