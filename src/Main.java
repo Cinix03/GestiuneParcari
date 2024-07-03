@@ -1,24 +1,17 @@
-import Domain.Parcare;
+import Controllers.ServiceParcare;
+import Repositories.RepoParcare;
+import Uis.GUI;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.*;
-
 
 public class Main extends Application {
     @Override
-    public void start(Stage primaryStage) {
-        //Label label = new Label("Hello, JavaFX!");
-        Button button = new Button("Click Me");
-        button.setOnAction(e->System.out.println("Click Me"));
-        VBox vBox = new VBox();
-        vBox.getChildren().add(button);
-        //scene.getChildren().add(button);
-        Scene scene = new Scene(vBox, 400, 300);
-        Parcare p = new Parcare("aici", "prima", 40, 30, 0, 30);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage primaryStage) throws Exception {
+        RepoParcare r = new RepoParcare("/Users/vasilegeorge/IdeaProjects/JavaFirst/src/Data/DateReale");
+        ServiceParcare s = new ServiceParcare(r);
+        GUI.setService(s);
+        GUI gui = new GUI();
+        gui.start(primaryStage);
     }
 
     public static void main(String[] args) {

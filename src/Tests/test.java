@@ -41,21 +41,21 @@ public class test {
         Assertions.assertTrue(p.getNume().equals("Nume1"));
         Assertions.assertTrue(p.getAdresa().equals("aici"));
         Assertions.assertEquals(200.5, p.getDimensiune(), 0.0001);
-        Assertions.assertEquals(p.getLocuri_totale(), 40);
-        Assertions.assertEquals(p.getLocuri_ocupate(), 35);
-        Assertions.assertEquals(p.getLocuri_libere(), 5);
+        Assertions.assertEquals(p.getLocuriTotale(), 40);
+        Assertions.assertEquals(p.getLocuriOcupate(), 35);
+        Assertions.assertEquals(p.getLocuriLibere(), 5);
         p.setAdresa("aici1");
         Assertions.assertTrue(p.getAdresa().equals("aici1"));
         p.setNume("Nume2");
         Assertions.assertTrue(p.getNume().equals("Nume2"));
         p.setCapacitate(210.5);
         Assertions.assertEquals(p.getDimensiune(), 210.5, 0.0001);
-        p.setLocuri_totale(20);
-        Assertions.assertEquals(p.getLocuri_totale(), 20);
-        p.setLocuri_ocupate(20);
-        Assertions.assertEquals(p.getLocuri_ocupate(), 20);
-        p.setLocuri_libere(0);
-        Assertions.assertEquals(p.getLocuri_libere(), 0);
+        p.setLocuriLibere(20);
+        Assertions.assertEquals(p.getLocuriLibere(), 20);
+        p.setLocuriOcupate(20);
+        Assertions.assertEquals(p.getLocuriOcupate(), 20);
+        p.setLocuriTotale(0);
+        Assertions.assertEquals(p.getLocuriTotale(), 0);
     }
 
     @Test

@@ -35,13 +35,13 @@ public class Parcare {
     public double getDimensiune() {
         return dimensiune;
     }
-    public int getLocuri_totale() {
+    public int getLocuriTotale() {
         return locuri_totale;
     }
-    public int getLocuri_ocupate() {
+    public int getLocuriOcupate() {
         return locuri_ocupate;
     }
-    public int getLocuri_libere() {
+    public int getLocuriLibere() {
         return locuri_libere;
     }
     public void setAdresa(String adresa) {
@@ -53,13 +53,13 @@ public class Parcare {
     public void setCapacitate(double capacitate) {
         this.dimensiune = capacitate;
     }
-    public void setLocuri_totale(int locuri_totale) {
+    public void setLocuriLibere(int locuri_totale) {
         this.locuri_totale = locuri_totale;
     }
-    public void setLocuri_ocupate(int locuri_ocupate) {
+    public void setLocuriOcupate(int locuri_ocupate) {
         this.locuri_ocupate = locuri_ocupate;
     }
-    public void setLocuri_libere(int locuri_libere) {
+    public void setLocuriTotale(int locuri_libere) {
         this.locuri_libere = locuri_libere;
     }
 
