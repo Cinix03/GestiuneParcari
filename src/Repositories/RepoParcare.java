@@ -46,8 +46,13 @@ public class RepoParcare {
 
     private void load_to_file(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nume_fisier))) {
+            int maxx = parcari.size();
+            int cnt=1;
             for (Parcare p : parcari) {
                 writer.write(p.toString());
+                if(cnt<maxx)
+                    writer.write("\n");
+                cnt++;
             }
             writer.newLine(); // Adds a new line
         } catch (IOException e) {

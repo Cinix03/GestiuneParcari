@@ -6,11 +6,11 @@ import Domain.Parcare;
 public class ValidatorParcare {
 
     public void validate(Parcare parcare) throws ValidationException {
-        if (parcare.getAdresa() == null || parcare.getAdresa().isEmpty()) {
+        if (parcare.getAdresa().isEmpty()) {
             throw new ValidationException("Adresa nu poate fi goală!");
         }
 
-        if (parcare.getNume() == null || parcare.getNume().isEmpty()) {
+        if (parcare.getNume().isEmpty()) {
             throw new ValidationException("Numele nu poate fi gol!");
         }
 

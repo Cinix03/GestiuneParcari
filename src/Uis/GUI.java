@@ -2,9 +2,11 @@ package Uis;
 
 import Controllers.ServiceParcare;
 import Domain.Parcare;
+import Validators.ValidationException;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -82,7 +84,7 @@ public class GUI extends Application {
     }
 
     private void init_connect() {
-        btnAdd.setOnAction(e -> {
+        btnAdd.setOnAction(_ -> {
            String adresa = adresaEdit.getText();
            String nume = numeEdit.getText();
            Double dimensiune = Double.parseDouble(dimensioneEdit.getText());
@@ -94,8 +96,15 @@ public class GUI extends Application {
                 s.adaugaParcare(p);
                 tv.getItems().addAll(s.get_all());
             }catch(Exception ex){
-                ex.printStackTrace();
+                showMessage(Alert.AlertType.ERROR, "Validation error", ex.getMessage());
             }
         });
+    }
+    private void showMessage(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
