@@ -85,17 +85,25 @@ public class GUI extends Application {
 
     private void init_connect() {
         btnAdd.setOnAction(_ -> {
-           String adresa = adresaEdit.getText();
-           String nume = numeEdit.getText();
-           Double dimensiune = Double.parseDouble(dimensioneEdit.getText());
-           Integer locuriTotale = Integer.parseInt(locuritotaleEdit.getText());
-//           Integer locuriOcupate = Integer.parseInt(locuritotaleEdit.getText());
-//           Integer locuriLibere = Integer.parseInt(locuritotaleEdit.getText());
-            Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, 0);
-            try{
+            try {
+                String adresa = adresaEdit.getText();
+                String nume = numeEdit.getText();
+                if (adresa.isEmpty() || nume.isEmpty() || dimensioneEdit.getText().isEmpty() || locuritotaleEdit.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Toate câmpurile trebuie completate.");
+                }
+                Double dimensiune = Double.parseDouble(dimensioneEdit.getText());
+                Integer locuriTotale = Integer.parseInt(locuritotaleEdit.getText());
+                // Integer locuriOcupate = Integer.parseInt(locuritotaleEdit.getText());
+                // Integer locuriLibere = Integer.parseInt(locuritotaleEdit.getText());
+
+                Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, 0);
                 s.adaugaParcare(p);
-                tv.getItems().addAll(s.get_all());
-            }catch(Exception ex){
+                tv.getItems().setAll(s.get_all());
+            } catch (NumberFormatException e) {
+                showMessage(Alert.AlertType.ERROR, "Input Error", "Dimensiunea și locurile totale trebuie să fie numere valide.");
+            } catch (IllegalArgumentException e) {
+                showMessage(Alert.AlertType.ERROR, "Input Error", e.getMessage());
+            } catch (Exception ex) {
                 showMessage(Alert.AlertType.ERROR, "Validation error", ex.getMessage());
             }
         });
