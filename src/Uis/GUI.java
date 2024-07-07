@@ -29,7 +29,14 @@ public class GUI extends Application {
     private Label dimensioneLbl = new Label("Dimensiune: ");
     private TextField locuritotaleEdit = new TextField();
     private Label locuritotaleLbl = new Label("Locuri Totale: ");
+    private TextField liniiEdit = new TextField();
+    private Label liniiLbl = new Label("Linii: ");
+    private TextField coloaneEdit = new TextField();
+    private Label coloaneLbl = new Label("Coloane: ");
+
+
     private Button btnAdd = new Button("Add");
+    private Button btnRemove = new Button("Remove");
 
     public static void setService(ServiceParcare service) {
         s = service;
@@ -42,6 +49,8 @@ public class GUI extends Application {
     }
 
     private void init_gui(Stage primaryStage) {
+        tv.setMinHeight(400);
+        tv.setMinWidth(600);
 
         TableColumn<Parcare, String> adresa = new TableColumn<>("Adresa");
         adresa.setCellValueFactory(new PropertyValueFactory<>("adresa"));
@@ -69,15 +78,36 @@ public class GUI extends Application {
         dimensioneEdit.setPromptText("Scrieti dimensiunea");
         locuritotaleEdit.setPromptText("Scrieti locurile totale");
 
+        // Create HBox for each row of label and text field
+        HBox adresaBox = new HBox(10, adresaLbl, adresaEdit);
+        HBox numeBox = new HBox(10, numeLbl, numeEdit);
+        HBox dimensiuneBox = new HBox(10, dimensioneLbl, dimensioneEdit);
+        HBox locuriTotaleBox = new HBox(10, locuritotaleLbl, locuritotaleEdit);
+        HBox liniiBox = new HBox(10, liniiLbl, liniiEdit);
+        HBox coloaneBox = new HBox(10, coloaneLbl, coloaneEdit);
+
         // Create an HBox for the button and center the button
         HBox buttonBox = new HBox();
+        buttonBox.setSpacing(10);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(btnAdd);
+        buttonBox.getChildren().add(btnRemove);
 
-        lyMain.getChildren().addAll(tv, adresaLbl, adresaEdit, numeLbl, numeEdit, dimensioneLbl, dimensioneEdit, locuritotaleLbl, locuritotaleEdit, buttonBox);
+        // Apply inline CSS styling to the button
+        btnAdd.setStyle("-fx-background-color: #79af4c; -fx-text-fill: #efe9e9; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+        btnRemove.setStyle("-fx-background-color: #c40808; -fx-text-fill: #efe9e9; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+
+        HBox campuriEdit = new HBox();
+        campuriEdit.setSpacing(20);
+        campuriEdit.setAlignment(Pos.CENTER);
+        VBox AN = new VBox(30,adresaBox, numeBox);
+        VBox DL = new VBox(30, dimensiuneBox, locuriTotaleBox);
+        VBox LC = new VBox(30, liniiBox, coloaneBox);
+        campuriEdit.getChildren().addAll(AN, DL, LC);
+        lyMain.getChildren().addAll(tv, campuriEdit, buttonBox);
         lyMain.setSpacing(10);
 
-        Scene scene = new Scene(lyMain, 800, 600); // Specify width and height
+        Scene scene = new Scene(lyMain, 1000, 800); // Specify width and height
         primaryStage.setScene(scene);
         primaryStage.setTitle("Parcare Table");
         primaryStage.show();
@@ -88,15 +118,14 @@ public class GUI extends Application {
             try {
                 String adresa = adresaEdit.getText();
                 String nume = numeEdit.getText();
-                if (adresa.isEmpty() || nume.isEmpty() || dimensioneEdit.getText().isEmpty() || locuritotaleEdit.getText().isEmpty()) {
+                if (adresa.isEmpty() || nume.isEmpty() || dimensioneEdit.getText().isEmpty() || locuritotaleEdit.getText().isEmpty() || liniiEdit.getText().isEmpty() || coloaneEdit.getText().isEmpty()) {
                     throw new IllegalArgumentException("Toate câmpurile trebuie completate.");
                 }
                 Double dimensiune = Double.parseDouble(dimensioneEdit.getText());
                 Integer locuriTotale = Integer.parseInt(locuritotaleEdit.getText());
-                // Integer locuriOcupate = Integer.parseInt(locuritotaleEdit.getText());
-                // Integer locuriLibere = Integer.parseInt(locuritotaleEdit.getText());
-
-                Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, 0);
+                Integer nrLinii = Integer.parseInt(liniiEdit.getText());
+                Integer coloaneTotale = Integer.parseInt(coloaneEdit.getText());
+                Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, locuriTotale, nrLinii, coloaneTotale);
                 s.adaugaParcare(p);
                 tv.getItems().setAll(s.get_all());
             } catch (NumberFormatException e) {
@@ -108,11 +137,16 @@ public class GUI extends Application {
             }
         });
     }
+
     private void showMessage(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

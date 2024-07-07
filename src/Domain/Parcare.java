@@ -1,23 +1,30 @@
 package Domain;
 
+import java.util.ArrayList;
+
 public class Parcare {
     private String adresa;
     private String nume;
+    private ArrayList<LocDeParcare> locuriDeParcare = new ArrayList<>();
     private double dimensiune;
     private int locuri_totale;
     private int locuri_ocupate;
     private int locuri_libere;
+    private int linii;
+    private int coloane;
 
     /*
     Constructor pentru Domain.Parcare;
      */
-    public Parcare(String adresa, String nume, double capacitate, int locuri_totale, int locuri_ocupate, int locuri_libere) {
+    public Parcare(String adresa, String nume, double capacitate, int locuri_totale, int locuri_ocupate, int locuri_libere, int linii, int coloane) {
         this.adresa = adresa;
         this.nume = nume;
         this.dimensiune = capacitate;
         this.locuri_totale = locuri_totale;
         this.locuri_ocupate = locuri_ocupate;
         this.locuri_libere = locuri_libere;
+        this.linii = linii;
+        this.coloane = coloane;
     };
 
     @Override
@@ -49,6 +56,8 @@ public class Parcare {
     public int getLocuriLibere() {
         return locuri_libere;
     }
+    public int getLinii() {return linii;}
+    public int getColoane() {return coloane;}
     public void setAdresa(String adresa) {
         this.adresa = adresa;
     }
@@ -67,5 +76,7 @@ public class Parcare {
     public void setLocuriTotale(int locuri_libere) {
         this.locuri_libere = locuri_libere;
     }
+    public void setLinii(int linii) {this.linii = linii;}
+    public void setColoane(int coloane) {this.coloane = coloane;}
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RepoParcare {
     private String nume_fisier;
-    private ArrayList<Parcare> parcari = new ArrayList<Parcare>();
+    private ArrayList<Parcare> parcari = new ArrayList<>();
 
     public RepoParcare(String nume_fisier) throws IOException {
         this.nume_fisier = nume_fisier;
@@ -35,7 +35,7 @@ public class RepoParcare {
             List<String> lines = Files.readAllLines(Paths.get(nume_fisier));
             for(String line : lines){
                 String[] parts = line.split(",");
-                Parcare p = new Parcare(parts[0], parts[1], Double.parseDouble(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+                Parcare p = new Parcare(parts[0], parts[1], Double.parseDouble(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), Integer.parseInt(parts[6]), Integer.parseInt(parts[7]));
                 parcari.add(p);
             }
 
