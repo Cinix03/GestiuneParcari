@@ -29,7 +29,7 @@ public class Parcare {
 
     @Override
     public String toString() {
-        return adresa+","+nume+","+dimensiune+","+locuri_totale+","+locuri_ocupate+","+locuri_libere;
+        return adresa+","+nume+","+dimensiune+","+locuri_totale+","+locuri_ocupate+","+locuri_libere+","+linii+","+coloane;
     }
 
     /*
