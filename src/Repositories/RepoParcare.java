@@ -25,8 +25,13 @@ public class RepoParcare {
         load_to_file();
     }
 
-    public void stergeParcare(Parcare parcare) {
-        parcari.remove(parcare);
+    public void stergeParcare(String adr) {
+        for(Parcare p : parcari) {
+            if(p.getAdresa() == adr){
+                parcari.remove(p);
+                break;
+            }
+        }
         load_to_file();
     }
 

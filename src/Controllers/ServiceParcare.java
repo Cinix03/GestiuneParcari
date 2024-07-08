@@ -20,4 +20,7 @@ public class ServiceParcare {
         v.validate(p);
         r.adaugaParcare(p);
     }
+    public void stergeParcare(String adresa) throws ValidationException {
+        r.stergeParcare(adresa);
+    }
 }

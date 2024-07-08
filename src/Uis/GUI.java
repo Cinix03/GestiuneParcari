@@ -136,6 +136,21 @@ public class GUI extends Application {
                 showMessage(Alert.AlertType.ERROR, "Validation error", ex.getMessage());
             }
         });
+        btnRemove.setOnAction(_->{
+            try {
+                //get adresa from selected row
+                String adresa = tv.getSelectionModel().getSelectedItem().getAdresa();
+                if (adresa.isEmpty()) {
+                    throw new IllegalArgumentException("Adresa trebuie completată.");
+                }
+                s.stergeParcare(adresa);
+                tv.getItems().setAll(s.get_all());
+            } catch (IllegalArgumentException e) {
+                showMessage(Alert.AlertType.ERROR, "Input Error", e.getMessage());
+            } catch (ValidationException e) {
+                showMessage(Alert.AlertType.ERROR, "Validation error", e.getMessage());
+            }
+        });
     }
 
     private void showMessage(Alert.AlertType alertType, String title, String message) {
