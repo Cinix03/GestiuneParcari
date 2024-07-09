@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 public class GUI extends Application {
     private static ServiceParcare s;
@@ -52,8 +53,22 @@ public class GUI extends Application {
     }
 
     private void init_gui(Stage primaryStage) {
-        tv.setMinHeight(400);
-        tv.setMinWidth(600);
+        tv.setMinWidth(500);
+        tv.setMaxHeight(500);
+
+
+        primaryStage.setMinWidth(750);
+        primaryStage.setMinHeight(600);
+        primaryStage.setMaxWidth(750);
+        primaryStage.setMaxHeight(650);
+
+        VBox.setVgrow(tv, Priority.ALWAYS);
+        HBox.setHgrow(adresaEdit, Priority.ALWAYS);
+        HBox.setHgrow(numeEdit, Priority.ALWAYS);
+        HBox.setHgrow(dimensioneEdit, Priority.ALWAYS);
+        HBox.setHgrow(locuritotaleEdit, Priority.ALWAYS);
+        HBox.setHgrow(liniiEdit, Priority.ALWAYS);
+        HBox.setHgrow(coloaneEdit, Priority.ALWAYS);
 
         TableColumn<Parcare, String> adresa = new TableColumn<>("Adresa");
         adresa.setCellValueFactory(new PropertyValueFactory<>("adresa"));
@@ -80,6 +95,13 @@ public class GUI extends Application {
         numeEdit.setPromptText("Scrieti nume");
         dimensioneEdit.setPromptText("Scrieti dimensiunea");
         locuritotaleEdit.setPromptText("Scrieti locurile totale");
+
+        adresa.setMinWidth(100);
+        nume.setMinWidth(100);
+        dimensiune.setMinWidth(100);
+        locuriTotale.setMinWidth(100);
+        locuriOcupate.setMinWidth(100);
+        locuriLibere.setMinWidth(100);
 
         // Create HBox for each row of label and text field
         HBox adresaBox = new HBox(10, adresaLbl, adresaEdit);
@@ -137,6 +159,12 @@ public class GUI extends Application {
                 Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, locuriTotale, nrLinii, coloaneTotale, distributieLocuri);
                 s.adaugaParcare(p);
                 tv.getItems().setAll(s.get_all());
+                adresaEdit.clear();
+                numeEdit.clear();
+                dimensioneEdit.clear();
+                locuritotaleEdit.clear();
+                liniiEdit.clear();
+                coloaneEdit.clear();
             } catch (NumberFormatException e) {
                 showMessage(Alert.AlertType.ERROR, "Input Error", "Dimensiunea, linii și coloane trebuie să fie numere valide.");
             } catch (IllegalArgumentException e) {
