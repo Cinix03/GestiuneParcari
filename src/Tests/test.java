@@ -37,7 +37,7 @@ public class test {
 
     @Test
     public void testDomain() {
-        Parcare p = new Parcare("aici", "Nume1", 200.5, 40, 35, 5, 5, 5);
+        Parcare p = new Parcare("aici", "Nume1", 200.5, 6, 2, 4, 2, 3, "XX----");
         Assertions.assertTrue(p.getNume().equals("Nume1"));
         Assertions.assertTrue(p.getAdresa().equals("aici"));
         Assertions.assertEquals(200.5, p.getDimensiune(), 0.0001);

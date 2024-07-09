@@ -40,7 +40,7 @@ public class RepoParcare {
             List<String> lines = Files.readAllLines(Paths.get(nume_fisier));
             for(String line : lines){
                 String[] parts = line.split(",");
-                Parcare p = new Parcare(parts[0], parts[1], Double.parseDouble(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), Integer.parseInt(parts[6]), Integer.parseInt(parts[7]));
+                Parcare p = new Parcare(parts[0], parts[1], Double.parseDouble(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), Integer.parseInt(parts[6]), Integer.parseInt(parts[7]), parts[8]);
                 parcari.add(p);
             }
 
@@ -49,7 +49,7 @@ public class RepoParcare {
         }
     }
 
-    private void load_to_file(){
+    public void load_to_file(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nume_fisier))) {
             int maxx = parcari.size();
             int cnt=1;

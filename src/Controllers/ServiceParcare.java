@@ -23,4 +23,8 @@ public class ServiceParcare {
     public void stergeParcare(String adresa) throws ValidationException {
         r.stergeParcare(adresa);
     }
+
+    public void RefreshFile() {
+        r.load_to_file();
+    }
 }

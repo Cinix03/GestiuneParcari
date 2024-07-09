@@ -2,13 +2,13 @@ package Domain;
 
 public class LocDeParcare {
     private int id;
-    private boolean occupied;
+    private boolean free;
 
-    public LocDeParcare(int id, boolean occupied) {
+    public LocDeParcare(int id, boolean free) {
         this.id = id;
-        this.occupied = occupied;
+        this.free = free;
     }
     public int getId() {return id;}
-    public boolean isOccupied() {return occupied;}
-    public void setOccupied(boolean occupied) {this.occupied = occupied;}
+    public boolean isFree() {return free;}
+    public void setState(boolean occupied) {this.free = occupied;}
 }

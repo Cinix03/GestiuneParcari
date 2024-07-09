@@ -1,9 +1,11 @@
 package Uis;
 
 import Controllers.ServiceParcare;
+import Domain.LocDeParcare;
 import Domain.Parcare;
 import Validators.ValidationException;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -16,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
 
 public class GUI extends Application {
     private static ServiceParcare s;
@@ -122,21 +125,28 @@ public class GUI extends Application {
                     throw new IllegalArgumentException("Toate câmpurile trebuie completate.");
                 }
                 Double dimensiune = Double.parseDouble(dimensioneEdit.getText());
-                Integer locuriTotale = Integer.parseInt(locuritotaleEdit.getText());
                 Integer nrLinii = Integer.parseInt(liniiEdit.getText());
                 Integer coloaneTotale = Integer.parseInt(coloaneEdit.getText());
-                Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, locuriTotale, nrLinii, coloaneTotale);
+                Integer locuriTotale = nrLinii * coloaneTotale;
+
+                String distributieLocuri = "";
+                for (int i = 0; i < locuriTotale; i++) {
+                    distributieLocuri += "-";
+                }
+
+                Parcare p = new Parcare(adresa, nume, dimensiune, locuriTotale, 0, locuriTotale, nrLinii, coloaneTotale, distributieLocuri);
                 s.adaugaParcare(p);
                 tv.getItems().setAll(s.get_all());
             } catch (NumberFormatException e) {
-                showMessage(Alert.AlertType.ERROR, "Input Error", "Dimensiunea și locurile totale trebuie să fie numere valide.");
+                showMessage(Alert.AlertType.ERROR, "Input Error", "Dimensiunea, linii și coloane trebuie să fie numere valide.");
             } catch (IllegalArgumentException e) {
                 showMessage(Alert.AlertType.ERROR, "Input Error", e.getMessage());
             } catch (Exception ex) {
                 showMessage(Alert.AlertType.ERROR, "Validation error", ex.getMessage());
             }
         });
-        btnRemove.setOnAction(_->{
+
+        btnRemove.setOnAction(_ -> {
             try {
                 //get adresa from selected row
                 String adresa = tv.getSelectionModel().getSelectedItem().getAdresa();
@@ -149,6 +159,58 @@ public class GUI extends Application {
                 showMessage(Alert.AlertType.ERROR, "Input Error", e.getMessage());
             } catch (ValidationException e) {
                 showMessage(Alert.AlertType.ERROR, "Validation error", e.getMessage());
+            }
+        });
+
+        tv.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                Parcare p = tv.getSelectionModel().getSelectedItem();
+                if (p != null) {
+                    Stage parkingStage = new Stage();
+                    parkingStage.setTitle("Parking Layout for " + p.getNume());
+
+                    GridPane grid = new GridPane();
+                    grid.setHgap(10);
+                    grid.setVgap(10);
+                    grid.setPadding(new Insets(10, 10, 10, 10));
+
+                    for (int i = 0; i < p.getLinii(); i++) {
+                        for (int j = 0; j < p.getColoane(); j++) {
+                            Button parkingSpot = new Button();
+                            parkingSpot.setPrefSize(50, 50);
+                            LocDeParcare loc = p.getLocuriDeParcare().get(i * p.getColoane() + j);
+
+                            if (loc.isFree()) {
+                                parkingSpot.setStyle("-fx-background-color: #00FF00;"); // Green for free
+                            } else {
+                                parkingSpot.setStyle("-fx-background-color: #FF0000;"); // Red for occupied
+                            }
+
+                            // Toggle parking spot status on click
+                            parkingSpot.setOnAction(event -> {
+                                if (loc.isFree()) {
+                                    loc.setState(false);
+                                    p.refreshLocuri();
+                                    s.RefreshFile();
+                                    tv.getItems().setAll(s.get_all());
+                                    parkingSpot.setStyle("-fx-background-color: #FF0000;");
+                                } else {
+                                    loc.setState(true); // Mark as free
+                                    p.refreshLocuri();
+                                    s.RefreshFile();
+                                    tv.getItems().setAll(s.get_all());
+                                    parkingSpot.setStyle("-fx-background-color: #00FF00;");
+                                }
+                            });
+
+                            grid.add(parkingSpot, j, i);
+                        }
+                    }
+
+                    Scene scene = new Scene(grid);
+                    parkingStage.setScene(scene);
+                    parkingStage.show();
+                }
             }
         });
     }

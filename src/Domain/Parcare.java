@@ -16,7 +16,7 @@ public class Parcare {
     /*
     Constructor pentru Domain.Parcare;
      */
-    public Parcare(String adresa, String nume, double capacitate, int locuri_totale, int locuri_ocupate, int locuri_libere, int linii, int coloane) {
+    public Parcare(String adresa, String nume, double capacitate, int locuri_totale, int locuri_ocupate, int locuri_libere, int linii, int coloane, String distributieParcare) {
         this.adresa = adresa;
         this.nume = nume;
         this.dimensiune = capacitate;
@@ -25,11 +25,22 @@ public class Parcare {
         this.locuri_libere = locuri_libere;
         this.linii = linii;
         this.coloane = coloane;
+        for(int i=0;i<linii*coloane;i++)
+            if(distributieParcare.charAt(i)=='-')
+                locuriDeParcare.add(new LocDeParcare(i, true));
+            else
+                locuriDeParcare.add(new LocDeParcare(i, false));
     };
 
     @Override
     public String toString() {
-        return adresa+","+nume+","+dimensiune+","+locuri_totale+","+locuri_ocupate+","+locuri_libere+","+linii+","+coloane;
+        String distributieParcare = "";
+        for(LocDeParcare loc : locuriDeParcare)
+            if(loc.isFree())
+                distributieParcare += "-";
+            else
+                distributieParcare += "X";
+        return adresa+","+nume+","+dimensiune+","+locuri_totale+","+locuri_ocupate+","+locuri_libere+","+linii+","+coloane+","+distributieParcare;
     }
 
     /*
@@ -58,6 +69,9 @@ public class Parcare {
     }
     public int getLinii() {return linii;}
     public int getColoane() {return coloane;}
+    public ArrayList<LocDeParcare> getLocuriDeParcare() {
+        return locuriDeParcare;
+    }
     public void setAdresa(String adresa) {
         this.adresa = adresa;
     }
@@ -78,5 +92,23 @@ public class Parcare {
     }
     public void setLinii(int linii) {this.linii = linii;}
     public void setColoane(int coloane) {this.coloane = coloane;}
+    public void setLocuriDeParcare(String distributieParcare){
+        for(int i=0;i<linii*coloane;i++)
+            if(distributieParcare.charAt(i)=='-')
+                locuriDeParcare.add(new LocDeParcare(i, true));
+            else
+                locuriDeParcare.add(new LocDeParcare(i, false));
+    }
 
+    public void refreshLocuri(){
+        int locuri_libere = 0;
+        int locuri_ocupate = 0;
+        for(LocDeParcare loc : locuriDeParcare)
+            if(loc.isFree())
+                locuri_libere++;
+            else
+                locuri_ocupate++;
+        this.locuri_libere = locuri_libere;
+        this.locuri_ocupate = locuri_ocupate;
+    }
 }
