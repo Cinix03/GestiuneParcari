@@ -1,7 +1,9 @@
 package Tests;
 
+import Controllers.ServiceParcare;
 import Domain.Parcare;
 import Repositories.RepoParcare;
+import Validators.ValidationException;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -41,21 +43,21 @@ public class test {
         Assertions.assertTrue(p.getNume().equals("Nume1"));
         Assertions.assertTrue(p.getAdresa().equals("aici"));
         Assertions.assertEquals(200.5, p.getDimensiune(), 0.0001);
-        Assertions.assertEquals(p.getLocuriTotale(), 40);
-        Assertions.assertEquals(p.getLocuriOcupate(), 35);
-        Assertions.assertEquals(p.getLocuriLibere(), 5);
+        Assertions.assertEquals(p.getLocuriTotale(), 6);
+        Assertions.assertEquals(p.getLocuriOcupate(), 2);
+        Assertions.assertEquals(p.getLocuriLibere(), 4);
         p.setAdresa("aici1");
         Assertions.assertTrue(p.getAdresa().equals("aici1"));
         p.setNume("Nume2");
         Assertions.assertTrue(p.getNume().equals("Nume2"));
         p.setCapacitate(210.5);
         Assertions.assertEquals(p.getDimensiune(), 210.5, 0.0001);
-        p.setLocuriLibere(20);
-        Assertions.assertEquals(p.getLocuriLibere(), 20);
-        p.setLocuriOcupate(20);
-        Assertions.assertEquals(p.getLocuriOcupate(), 20);
-        p.setLocuriTotale(0);
-        Assertions.assertEquals(p.getLocuriTotale(), 0);
+        p.setLocuriLibere(3);
+        Assertions.assertEquals(p.getLocuriLibere(), 3);
+        p.setLocuriOcupate(3);
+        Assertions.assertEquals(p.getLocuriOcupate(), 3);
+        p.setLocuriTotale(12);
+        Assertions.assertEquals(p.getLocuriTotale(), 12);
     }
 
     @Test
@@ -64,7 +66,23 @@ public class test {
         RepoParcare repo = new RepoParcare("/Users/vasilegeorge/IdeaProjects/JavaFirst/src/Tests/DataTest.txt");
         ArrayList<Parcare> l = repo.getParcari();
         System.out.println(l.size());
-        Assertions.assertTrue(l.size() == 15);
+        Assertions.assertTrue(l.size() == 2);
+    }
+
+    @Test
+    public void testService() throws IOException, ValidationException {
+        initAll();
+        RepoParcare repo = new RepoParcare("/Users/vasilegeorge/IdeaProjects/JavaFirst/src/Tests/DataTest.txt");
+        ArrayList<Parcare> l = repo.getParcari();
+        Assertions.assertTrue(l.size() == 2);
+        ServiceParcare service = new ServiceParcare(repo);
+        Parcare p = new Parcare("aici", "Nume1", 200.5, 6, 2, 4, 2, 3, "XX----");
+        service.adaugaParcare(p);
+        l = repo.getParcari();
+        Assertions.assertTrue(l.size() == 3);
+        service.stergeParcare("aici");
+        l = repo.getParcari();
+        Assertions.assertTrue(l.size() == 2);
     }
 
     @AfterEach

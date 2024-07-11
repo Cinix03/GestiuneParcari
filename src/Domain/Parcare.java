@@ -81,14 +81,14 @@ public class Parcare {
     public void setCapacitate(double capacitate) {
         this.dimensiune = capacitate;
     }
-    public void setLocuriLibere(int locuri_totale) {
-        this.locuri_totale = locuri_totale;
+    public void setLocuriLibere(int locuri_libere) {
+        this.locuri_libere=locuri_libere;
     }
     public void setLocuriOcupate(int locuri_ocupate) {
         this.locuri_ocupate = locuri_ocupate;
     }
-    public void setLocuriTotale(int locuri_libere) {
-        this.locuri_libere = locuri_libere;
+    public void setLocuriTotale(int locuri_totale) {
+        this.locuri_totale=locuri_totale;
     }
     public void setLinii(int linii) {this.linii = linii;}
     public void setColoane(int coloane) {this.coloane = coloane;}
