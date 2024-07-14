@@ -1,13 +1,14 @@
 package Controllers;
 
 import Domain.Parcare;
+import Obs.Observable;
 import Repositories.RepoParcare;
 import Validators.ValidationException;
 import Validators.ValidatorParcare;
 
 import java.util.ArrayList;
 
-public class ServiceParcare {
+public class ServiceParcare extends Observable{
     private RepoParcare r;
     private ValidatorParcare v = new ValidatorParcare();
     public ServiceParcare(RepoParcare r) {
@@ -26,5 +27,6 @@ public class ServiceParcare {
 
     public void RefreshFile() {
         r.load_to_file();
+        notifyObservers();
     }
 }

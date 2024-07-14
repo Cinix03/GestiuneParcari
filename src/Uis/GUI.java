@@ -194,56 +194,19 @@ public class GUI extends Application {
             if (e.getClickCount() == 2) {
                 Parcare p = tv.getSelectionModel().getSelectedItem();
                 if (p != null) {
+                    FereastraVizualizareLocuri fereastra = new FereastraVizualizareLocuri(p, s, tv);
                     Stage parkingStage = new Stage();
-                    parkingStage.setTitle("Parking Layout for " + p.getNume());
-
-                    GridPane grid = new GridPane();
-                    grid.setHgap(10);
-                    grid.setVgap(10);
-                    grid.setPadding(new Insets(10, 10, 10, 10));
-
-                    for (int i = 0; i < p.getLinii(); i++) {
-                        for (int j = 0; j < p.getColoane(); j++) {
-                            Button parkingSpot = new Button();
-                            parkingSpot.setPrefSize(50, 50);
-                            LocDeParcare loc = p.getLocuriDeParcare().get(i * p.getColoane() + j);
-
-                            if (loc.isFree()) {
-                                parkingSpot.setStyle("-fx-background-color: #00FF00;"); // Green for free
-                            } else {
-                                parkingSpot.setStyle("-fx-background-color: #FF0000;"); // Red for occupied
-                            }
-
-                            // Toggle parking spot status on click
-                            parkingSpot.setOnAction(event -> {
-                                if (loc.isFree()) {
-                                    loc.setState(false);
-                                    p.refreshLocuri();
-                                    s.RefreshFile();
-                                    tv.getItems().setAll(s.get_all());
-                                    parkingSpot.setStyle("-fx-background-color: #FF0000;");
-                                } else {
-                                    loc.setState(true); // Mark as free
-                                    p.refreshLocuri();
-                                    s.RefreshFile();
-                                    tv.getItems().setAll(s.get_all());
-                                    parkingSpot.setStyle("-fx-background-color: #00FF00;");
-                                }
-                            });
-
-                            grid.add(parkingSpot, j, i);
-                        }
+                    try {
+                        fereastra.start(parkingStage);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
-
-                    Scene scene = new Scene(grid);
-                    parkingStage.setScene(scene);
-                    parkingStage.show();
                 }
             }
         });
     }
 
-    private void showMessage(Alert.AlertType alertType, String title, String message) {
+        private void showMessage(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
