@@ -29,4 +29,8 @@ public class ServiceParcare extends Observable{
         r.load_to_file();
         notifyObservers();
     }
+
+    public Parcare getParcare(String adresa) {
+        return r.getParcare(adresa);
+    }
 }

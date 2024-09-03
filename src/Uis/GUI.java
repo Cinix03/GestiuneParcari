@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.chart.PieChart;
 
 public class GUI extends Application {
     private static ServiceParcare s;
@@ -41,6 +42,7 @@ public class GUI extends Application {
 
     private Button btnAdd = new Button("Add");
     private Button btnRemove = new Button("Remove");
+    private Button btnDiagrama = new Button("Pie Chart");
 
     public static void setService(ServiceParcare service) {
         s = service;
@@ -57,8 +59,8 @@ public class GUI extends Application {
         tv.setMaxHeight(500);
 
 
-        primaryStage.setMinWidth(750);
-        primaryStage.setMinHeight(600);
+//        primaryStage.setMinWidth(750);
+//        primaryStage.setMinHeight(600);
         primaryStage.setMaxWidth(750);
         primaryStage.setMaxHeight(650);
 
@@ -95,6 +97,8 @@ public class GUI extends Application {
         numeEdit.setPromptText("Scrieti nume");
         dimensioneEdit.setPromptText("Scrieti dimensiunea");
         locuritotaleEdit.setPromptText("Scrieti locurile totale");
+        liniiEdit.setPromptText("Scrieti numarul de linii");
+        coloaneEdit.setPromptText("Scrieti numarul de coloane");
 
         adresa.setMinWidth(100);
         nume.setMinWidth(100);
@@ -103,7 +107,7 @@ public class GUI extends Application {
         locuriOcupate.setMinWidth(100);
         locuriLibere.setMinWidth(100);
 
-        // Create HBox for each row of label and text field
+        //Hbox pt campuri
         HBox adresaBox = new HBox(10, adresaLbl, adresaEdit);
         HBox numeBox = new HBox(10, numeLbl, numeEdit);
         HBox dimensiuneBox = new HBox(10, dimensioneLbl, dimensioneEdit);
@@ -111,16 +115,23 @@ public class GUI extends Application {
         HBox liniiBox = new HBox(10, liniiLbl, liniiEdit);
         HBox coloaneBox = new HBox(10, coloaneLbl, coloaneEdit);
 
-        // Create an HBox for the button and center the button
+        //Hbox pt butoane CRUD
         HBox buttonBox = new HBox();
         buttonBox.setSpacing(10);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(btnAdd);
         buttonBox.getChildren().add(btnRemove);
 
+        //Hbox pt statistici
+        HBox statisticiBox = new HBox();
+        statisticiBox.setSpacing(10);
+        statisticiBox.setAlignment(Pos.CENTER);
+        statisticiBox.getChildren().add(btnDiagrama);
+
         // Apply inline CSS styling to the button
         btnAdd.setStyle("-fx-background-color: #79af4c; -fx-text-fill: #efe9e9; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
         btnRemove.setStyle("-fx-background-color: #c40808; -fx-text-fill: #efe9e9; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+        btnDiagrama.setStyle("-fx-background-color: #082ec4; -fx-text-fill: #efe9e9; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
 
         HBox campuriEdit = new HBox();
         campuriEdit.setSpacing(20);
@@ -129,7 +140,7 @@ public class GUI extends Application {
         VBox DL = new VBox(30, dimensiuneBox, locuriTotaleBox);
         VBox LC = new VBox(30, liniiBox, coloaneBox);
         campuriEdit.getChildren().addAll(AN, DL, LC);
-        lyMain.getChildren().addAll(tv, campuriEdit, buttonBox);
+        lyMain.getChildren().addAll(tv, campuriEdit, buttonBox, statisticiBox);
         lyMain.setSpacing(10);
 
         Scene scene = new Scene(lyMain, 1000, 800); // Specify width and height
@@ -202,6 +213,15 @@ public class GUI extends Application {
                         ex.printStackTrace();
                     }
                 }
+            }
+        });
+        btnDiagrama.setOnAction(e -> {
+            Parcare p = tv.getSelectionModel().getSelectedItem();
+            if(p!=null) {
+                Stage chartStage = new Stage();
+                chartStage.setTitle("Pie Chart Ocupare");
+                FereastraPieChart fereastra = new FereastraPieChart(s, p.getAdresa());
+                fereastra.start(chartStage);
             }
         });
     }

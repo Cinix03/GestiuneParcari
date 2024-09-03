@@ -20,6 +20,15 @@ public class RepoParcare {
         load_from_file();
     };
 
+    public Parcare getParcare(String adr){
+        for(Parcare p : parcari){
+            if(p.getAdresa() == adr){
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void adaugaParcare(Parcare parcare) {
         parcari.add(parcare);
         load_to_file();
@@ -68,4 +77,5 @@ public class RepoParcare {
     public ArrayList<Parcare> getParcari() {
         return parcari;
     }
+
 }
