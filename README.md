@@ -1,4 +1,3 @@
-
 Overview
 
 This JavaFX application enables the management of parking facilities by allowing users to add and remove parking locations. The main interface features a dynamic table displaying details such as parking name, address, surface area, total spots, and available spots. Additionally, users can double-click on any parking location in the table to open a new window, where the parking layout is represented by an X-by-Y grid. In this grid, each button represents a parking spot, and clicking a button toggles its status between occupied and free, with the button color indicating the current state (red for occupied, green for free).
